@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:ultrasound_solutions/models/menu_option.dart';
+import 'package:ultrasound_solutions/models/colors.dart';
 
 class MenuScreen extends StatelessWidget {
   final MenuOption currentOption;
@@ -23,7 +24,7 @@ class MenuScreen extends StatelessWidget {
     return Center(
       child: Container(
         padding: EdgeInsets.only(top: 40.0),
-        color: Colors.cyanAccent,
+        color: kUltraSoundOrange600,
         child: ListView(children: menuOptions),
       ),
     );
@@ -47,7 +48,7 @@ class MenuScreen extends StatelessWidget {
           Container(
             width: 70.0,
             height: 2.0,
-            color: Colors.lightGreenAccent,
+            color: kUltraSoundRed900,
           ),
         ],
       ) :
