@@ -13,13 +13,20 @@ class MenuScreen extends StatelessWidget {
     this.onOptionClick,
   }) : assert(currentOption != null);
 
-
   @override
   Widget build(BuildContext context) {
     var menuOptions = <Widget>[];
     _categories.forEach((MenuOption menuOption){
       menuOptions.add(_buildOption(menuOption, context));
     });
+
+    return Center(
+      child: Container(
+        padding: EdgeInsets.only(top: 40.0),
+        color: Colors.cyanAccent,
+        child: ListView(children: menuOptions),
+      ),
+    );
   }
 
   Widget _buildOption(MenuOption menuOption, BuildContext context) {
