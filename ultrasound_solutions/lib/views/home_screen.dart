@@ -13,7 +13,7 @@ class HomeScreenState extends State<HomeScreen> {
   final listCount = 3;
   final titles = ["Schedule Service", "Snap A Pic & Get An Online Estimate", "I Have An Emergency"];
   final icons = ["icon1", "icon2", "icon3"];
-  final colors = [Colors.cyan, Colors.deepPurple, Colors.teal];
+  final colors = [Colors.blue, Colors.tealAccent, Colors.red];
   
   @override
   Widget build(BuildContext context) {
@@ -27,7 +27,7 @@ class HomeScreenState extends State<HomeScreen> {
   Widget _buildHomeList(){
     return new ListView.builder(
       itemCount: listCount,
-      itemExtent: 115.0,
+      itemExtent: 125.0,
       itemBuilder: (context, index) {
         return new FlatButton(
             onPressed: () {

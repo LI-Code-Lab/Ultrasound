@@ -6,7 +6,7 @@ class HomeCell extends StatelessWidget {
   final color;
 
   final iconSize = 50.0;
-  final titleSize = 14.0;
+  final titleSize = 18.0;
 
   HomeCell(this.title, this.icon, this.color);
 
