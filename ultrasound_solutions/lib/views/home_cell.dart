@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:ultrasound_solutions/models/colors.dart';
 
 class HomeCell extends StatelessWidget {
   final title;
@@ -27,13 +28,13 @@ class HomeCell extends StatelessWidget {
 
   Widget _buildCellContent(){
     return new Container(
-      width: 115.0,
+      width: 300.0,
       margin: new EdgeInsets.all(8.0),
-      child: new Column(
+      child: new Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          new Image.network(icon, height: iconSize, width: iconSize),
+          new Icon(icon, size: iconSize, color: kUltraSoundSurfaceWhite),
           new Text(title, textAlign: TextAlign.center, style: new TextStyle(fontSize: titleSize))
         ],
       ),
