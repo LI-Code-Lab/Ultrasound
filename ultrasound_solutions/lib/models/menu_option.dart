@@ -1,0 +1,1 @@
+enum MenuOption {Home, Services, Share, Feedback}
