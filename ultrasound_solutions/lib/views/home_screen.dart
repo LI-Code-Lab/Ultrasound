@@ -13,7 +13,7 @@ class HomeScreenState extends State<HomeScreen> {
   final listCount = 3;
   final titles = ["Schedule Service", "Snap A Pic & Get An Online Estimate", "I Have An Emergency"];
   final icons = [Icons.calendar_today, Icons.camera_alt, Icons.call];
-  final colors = [Colors.blue, Colors.tealAccent, Colors.red];
+  final colors = [Colors.blue, Colors.green, Colors.red];
   
   @override
   Widget build(BuildContext context) {

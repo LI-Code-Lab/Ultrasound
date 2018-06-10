@@ -6,7 +6,7 @@ class HomeCell extends StatelessWidget {
   final icon;
   final color;
 
-  final iconSize = 50.0;
+  final iconSize = 45.0;
   final titleSize = 18.0;
 
   HomeCell(this.title, this.icon, this.color);
@@ -16,28 +16,46 @@ class HomeCell extends StatelessWidget {
     return new Card(
       color: color,
       child: new Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          _buildCellContent()
+          _buildCell()
         ],
       ),
     );
   }
 
-  Widget _buildCellContent(){
+  Widget _buildCell() {
     return new Container(
-      width: 300.0,
+      width: 350.0,
       margin: new EdgeInsets.all(8.0),
       child: new Row(
-        mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
         children: <Widget>[
-          new Icon(icon, size: iconSize, color: kUltraSoundSurfaceWhite),
-          new Text(title, textAlign: TextAlign.center, style: new TextStyle(fontSize: titleSize))
+          new Container(
+            width: 75.0,
+            child: new Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new Icon(icon, size: iconSize, color: kUltraSoundSurfaceWhite)
+              ],
+            ),
+          ),
+          new Container(
+            width: 275.0,
+            child: new Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                new Text(title, textAlign: TextAlign.center, style: new TextStyle(fontSize: titleSize))
+              ],
+            ),
+          )
         ],
       ),
-    );
+    )
   }
 }
