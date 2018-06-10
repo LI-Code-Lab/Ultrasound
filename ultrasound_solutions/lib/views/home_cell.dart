@@ -56,6 +56,6 @@ class HomeCell extends StatelessWidget {
           )
         ],
       ),
-    )
+    );
   }
 }
