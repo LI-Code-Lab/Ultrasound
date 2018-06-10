@@ -4,6 +4,8 @@ import 'package:ultrasound_solutions/models/menu_option.dart';
 import 'package:ultrasound_solutions/views/home_screen.dart';
 import 'package:ultrasound_solutions/views/menu_screen.dart';
 import 'package:ultrasound_solutions/models/colors.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'dart:async';
 
 class App extends StatefulWidget {
   @override
@@ -37,9 +39,13 @@ class AppState extends State<App> {
   }
 
   void _onOptionClicked(MenuOption option){
+    final servicesUrl = 'https://www.uscultrasound.com/services/';
     setState(() {
       _currentOption = option;
     });
+    if(option == MenuOption.Services){
+      _launchURL(servicesUrl);
+    }
   }
 }
 
@@ -76,4 +82,12 @@ TextTheme _buildTextTheme(TextTheme base) {
     displayColor: Colors.red,
     bodyColor: Colors.white,
   );
+}
+
+_launchURL(String url) async {
+  if (await canLaunch(url)) {
+    await launch(url);
+  } else {
+    throw 'Could not launch $url';
+  }
 }

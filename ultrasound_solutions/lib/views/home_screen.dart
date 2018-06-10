@@ -32,7 +32,7 @@ class HomeScreenState extends State<HomeScreen> {
         return new FlatButton(
             onPressed: () {
               //navigate to next screen
-            }, 
+            },
             child: new HomeCell(
                 titles[index],
                 icons[index],
