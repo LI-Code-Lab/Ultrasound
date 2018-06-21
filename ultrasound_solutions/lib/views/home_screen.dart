@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'home_cell.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -14,6 +15,7 @@ class HomeScreenState extends State<HomeScreen> {
   final titles = ["Schedule Service", "Snap A Pic & Get An Online Estimate", "I Have An Emergency"];
   final icons = [Icons.calendar_today, Icons.camera_alt, Icons.call];
   final colors = [Colors.blue, Colors.green, Colors.red];
+  final phoneNumber = "tel://18007734582";
   
   @override
   Widget build(BuildContext context) {
@@ -32,6 +34,15 @@ class HomeScreenState extends State<HomeScreen> {
         return new FlatButton(
             onPressed: () {
               //navigate to next screen
+              if(index == 0){
+
+              }
+              if(index == 1){
+
+              }
+              if(index == 2){
+                launch(phoneNumber);
+              }
             },
             child: new HomeCell(
                 titles[index],
