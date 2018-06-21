@@ -2,14 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ultrasound_solutions/models/colors.dart';
 
-class ServiceFormScreen extends StatefulWidget {
+class EstimateFormScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return new ServiceFormScreenState();
+    return new EstimateFormScreenState();
   }
 }
 
-class ServiceFormScreenState extends State<ServiceFormScreen> {
+class EstimateFormScreenState extends State<EstimateFormScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final listCount = 1;
 
@@ -22,7 +22,7 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: new Text("Request Service"),
+        title: new Text("Request Estimate"),
       ),
       body: new Center(
         child: _buildServiceForm(),
@@ -59,7 +59,7 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
       child: TextFormField(
         controller: textController,
         style: TextStyle(
-          color: kUltraSoundPrimaryText
+            color: kUltraSoundPrimaryText
         ),
         validator: (value) {
           if (value.isEmpty) {
@@ -81,10 +81,10 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
             }
           },
           child: Text(
-              "Submit",
-              style: TextStyle(
-                color: kUltraSoundSurfaceWhite,
-              ),
+            "Submit",
+            style: TextStyle(
+              color: kUltraSoundSurfaceWhite,
+            ),
           ),
         ),
       ),
@@ -97,13 +97,13 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
       child: Text(
           title,
           style: TextStyle(
-            fontSize: 16.0,
-            color: kUltraSoundPrimaryText
+              fontSize: 16.0,
+              color: kUltraSoundPrimaryText
           )),
     );
   }
 
-  void _postServiceRequest(){
+  void _postEstimateRequest(){
     //do something with the text controller text
   }
 }

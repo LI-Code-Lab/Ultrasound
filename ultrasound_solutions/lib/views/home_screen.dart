@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'home_cell.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'service_form_screen.dart';
+import 'estimate_form_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -42,7 +43,10 @@ class HomeScreenState extends State<HomeScreen> {
                         builder: (context) => ServiceFormScreen()));
               }
               if(index == 1){
-
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => EstimateFormScreen()));
               }
               if(index == 2){
                 launch(phoneNumber);
