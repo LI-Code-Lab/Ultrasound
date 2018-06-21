@@ -15,3 +15,5 @@ const kUltraSoundSurfaceGrey = const Color(0xFF3c3c3c);
 const kUltraSoundBackgroundWhite = Colors.white;
 
 const kUltraSoundSurfaceTrans = const Color(0x8A007586);
+
+const kUltraSoundPrimaryText = const Color(0xFF212121);
