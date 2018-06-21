@@ -13,6 +13,11 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final listCount = 1;
 
+  final TextEditingController _companyNameTC = new TextEditingController();
+  final TextEditingController _contactNameTC = new TextEditingController();
+  final TextEditingController _contactNumberTC = new TextEditingController();
+  final TextEditingController _serviceNotesTC = new TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -34,23 +39,25 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               _buildTextFormTitleField("Company Name: "),
-              _buildTextFormField(),
+              _buildTextFormField(_companyNameTC),
               _buildTextFormTitleField("Contact Name: "),
-              _buildTextFormField(),
+              _buildTextFormField(_contactNameTC),
               _buildTextFormTitleField("Contact Phone Number: "),
-              _buildTextFormField(),
+              _buildTextFormField(_contactNumberTC),
               _buildTextFormTitleField("Service Notes: "),
-              _buildTextFormField(),
+              _buildTextFormField(_serviceNotesTC),
               _buildSubmitButton(),
             ],
           ),
         ));
   }
 
-  Widget _buildTextFormField() {
+  Widget _buildTextFormField(TextEditingController textController) {
     return new Container(
+      color: kUltraSoundFormTextFieldGrey,
       padding: EdgeInsets.all(8.0),
       child: TextFormField(
+        controller: textController,
         style: TextStyle(
           color: kUltraSoundPrimaryText
         ),
@@ -65,7 +72,7 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
 
   Widget _buildSubmitButton() {
     return new Container(
-      padding: EdgeInsets.all(8.0),
+      padding: EdgeInsets.all(16.0),
       child: new Center(
         child: RaisedButton(
           onPressed: () {
@@ -73,18 +80,30 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
               //if the form is valid do something
             }
           },
-          child: Text("Submit"),
+          child: Text(
+              "Submit",
+              style: TextStyle(
+                color: kUltraSoundSurfaceWhite,
+              ),
+          ),
         ),
       ),
     );
   }
 
   Widget _buildTextFormTitleField(String title){
-    return Text(
-        title,
-        style: TextStyle(
-          fontSize: 16.0,
-          color: kUltraSoundPrimaryText
-        ));
+    return new Container(
+      padding: EdgeInsets.all(8.0),
+      child: Text(
+          title,
+          style: TextStyle(
+            fontSize: 16.0,
+            color: kUltraSoundPrimaryText
+          )),
+    );
+  }
+
+  void _postServiceRequest(){
+    //do something with the text controller text 
   }
 }
