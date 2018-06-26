@@ -46,6 +46,7 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
               _buildTextFormField(_contactNumberTC),
               _buildTextFormTitleField("Service Notes: "),
               _buildTextFormField(_serviceNotesTC),
+              _buildPhotoButton(),
               _buildSubmitButton(),
             ],
           ),
@@ -68,6 +69,25 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
         },
       ),
     );
+  }
+
+  Widget _buildPhotoButton() {
+    return new Container(
+      padding: EdgeInsets.all(16.0),
+      child: new Center(
+        child: RaisedButton(
+          onPressed: () {
+
+          },
+          child: Text(
+            "Add Photos",
+            style: TextStyle(
+              color: kUltraSoundSurfaceWhite
+            ),
+          ),
+        ),
+      ),
+    )
   }
 
   Widget _buildSubmitButton() {
@@ -105,5 +125,9 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
 
   void _postEstimateRequest(){
     //do something with the text controller text
+  }
+
+  void _addImage(){
+    
   }
 }
