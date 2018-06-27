@@ -24,7 +24,7 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
   final submitEmail = "appdevbri@gmail.com";
   final submitTitle = 'Submit Estimate';
   final submitContent =
-      "This will submit your estimate to USC for review. Are you sure?";
+      "This will submit your estimate to USC for review. Once submitted a representative will contact you shortly. Are you sure?";
   final submitTrue = "Submit";
   final submitFalse = "Cancel";
 
@@ -57,7 +57,7 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
               _buildTextFormField(_contactNameTC),
               _buildTextFormTitleField("Contact Phone Number: "),
               _buildTextFormField(_contactNumberTC),
-              _buildTextFormTitleField("Service Notes: "),
+              _buildTextFormTitleField("Estimate Notes: "),
               _buildTextFormField(_serviceNotesTC),
               _buildPhotoButton(),
               _buildSubmitButton(),
@@ -163,7 +163,9 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
           ),
           actions: <Widget>[
             new FlatButton(
-                onPressed: () {Navigator.of(context).pop();},
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
                 child: new Text(
                   submitFalse,
                   style: new TextStyle(
@@ -172,10 +174,26 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
                   ),
                 )),
             new FlatButton(
-                onPressed: () {_postEstimateRequest(
-                    submitEmail,
-                    emailTitle,
-                    "Company Name: " + _companyNameTC.text + "\n\n" + "Contact Name: " + " " +  _contactNameTC.text + "\n\n" + "Contact Number: " +  _contactNumberTC.text + "\n\n" + "Service Notes: " + _serviceNotesTC.text + "\n\n\n\n\n\n" + "*this estiamte was submitted using the mobile app");Navigator.of(context).pop();},
+                onPressed: () {
+                  _postEstimateRequest(
+                      submitEmail,
+                      emailTitle,
+                      "Company Name: " +
+                          _companyNameTC.text +
+                          "\n\n" +
+                          "Contact Name: " +
+                          " " +
+                          _contactNameTC.text +
+                          "\n\n" +
+                          "Contact Number: " +
+                          _contactNumberTC.text +
+                          "\n\n" +
+                          "Estimate Notes: " +
+                          _serviceNotesTC.text +
+                          "\n\n\n\n" +
+                          "*this estimate was submitted using the mobile app");
+                  Navigator.of(context).pop();
+                },
                 child: new Text(
                   submitTrue,
                   style: new TextStyle(color: kUltraSoundOrange600),
