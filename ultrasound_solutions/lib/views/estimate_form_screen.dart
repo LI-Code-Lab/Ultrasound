@@ -1,6 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ultrasound_solutions/models/colors.dart';
+import 'dart:async';
+import 'package:url_launcher/url_launcher.dart';
 
 class EstimateFormScreen extends StatefulWidget {
   @override
@@ -17,6 +19,14 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
   final TextEditingController _contactNameTC = new TextEditingController();
   final TextEditingController _contactNumberTC = new TextEditingController();
   final TextEditingController _serviceNotesTC = new TextEditingController();
+
+  final emailTitle = "New Mobile Estimate Request";
+  final submitEmail = "appdevbri@gmail.com";
+  final submitTitle = 'Submit Estimate';
+  final submitContent =
+      "This will submit your estimate to USC for review. Are you sure?";
+  final submitTrue = "Submit";
+  final submitFalse = "Cancel";
 
   @override
   Widget build(BuildContext context) {
@@ -59,9 +69,7 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
       padding: EdgeInsets.all(8.0),
       child: TextFormField(
         controller: textController,
-        style: TextStyle(
-            color: kUltraSoundPrimaryText
-        ),
+        style: TextStyle(color: kUltraSoundPrimaryText),
         validator: (value) {
           if (value.isEmpty) {
             return 'Please enter some text';
@@ -76,18 +84,14 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
       padding: EdgeInsets.all(16.0),
       child: new Center(
         child: RaisedButton(
-          onPressed: () {
-
-          },
+          onPressed: () {},
           child: Text(
             "Add Photos",
-            style: TextStyle(
-              color: kUltraSoundSurfaceWhite
-            ),
+            style: TextStyle(color: kUltraSoundSurfaceWhite),
           ),
         ),
       ),
-    )
+    );
   }
 
   Widget _buildSubmitButton() {
@@ -98,6 +102,7 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
           onPressed: () {
             if (_formKey.currentState.validate()) {
               //if the form is valid do something
+              _neverSatisfied();
             }
           },
           child: Text(
@@ -111,23 +116,67 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
     );
   }
 
-  Widget _buildTextFormTitleField(String title){
+  Widget _buildTextFormTitleField(String title) {
     return new Container(
       padding: EdgeInsets.all(8.0),
-      child: Text(
-          title,
-          style: TextStyle(
-              fontSize: 16.0,
-              color: kUltraSoundPrimaryText
-          )),
+      child: Text(title,
+          style: TextStyle(fontSize: 16.0, color: kUltraSoundPrimaryText)),
     );
   }
 
-  void _postEstimateRequest(){
-    //do something with the text controller text
+  void _postEstimateRequest(String toMailId, String subject, String body) {
+    var url = 'mailto:$toMailId?subject=$subject&body=$body';
+    launch(url);
   }
 
-  void _addImage(){
-    
+  void _addImage() {
+    //open camera or gallery
+    //upload selected images to firebase storage
+    //use link to images in email
+  }
+
+  Future<Null> _neverSatisfied() async {
+    return showDialog<Null>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return new AlertDialog(
+          title: new Text(
+            submitTitle,
+            style: new TextStyle(color: kUltraSoundPrimaryText, fontSize: 18.0),
+          ),
+          content: new SingleChildScrollView(
+            child: new ListBody(
+              children: <Widget>[
+                new Text(
+                  submitContent,
+                  style: new TextStyle(
+                    color: kUltraSoundPrimaryText,
+                    fontSize: 16.0,
+                  ),
+                )
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            new FlatButton(
+                onPressed: () {Navigator.of(context).pop();},
+                child: new Text(
+                  submitFalse,
+                  style: new TextStyle(
+                    color: kUltraSoundPrimaryText,
+                    fontSize: 14.0,
+                  ),
+                )),
+            new FlatButton(
+                onPressed: () {_postEstimateRequest(submitEmail, emailTitle, _companyNameTC.text + " " + _contactNameTC.text + " " + _contactNumberTC.text);Navigator.of(context).pop();},
+                child: new Text(
+                  submitTrue,
+                  style: new TextStyle(color: kUltraSoundOrange600),
+                ))
+          ],
+        );
+      },
+    );
   }
 }
