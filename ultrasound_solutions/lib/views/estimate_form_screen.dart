@@ -20,13 +20,16 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
   final TextEditingController _contactNumberTC = new TextEditingController();
   final TextEditingController _serviceNotesTC = new TextEditingController();
 
-  final emailTitle = "New Mobile Estimate Request";
+  final emailTitle = "New Estimate Request";
   final submitEmail = "appdevbri@gmail.com";
   final submitTitle = 'Submit Estimate';
   final submitContent =
       "This will submit your estimate to USC for review. Are you sure?";
   final submitTrue = "Submit";
   final submitFalse = "Cancel";
+
+  //final serviceEmail = "service@uscultrasound.com";
+  //final submitEmail = "info@uscultrasound.com";
 
   @override
   Widget build(BuildContext context) {
@@ -169,7 +172,10 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
                   ),
                 )),
             new FlatButton(
-                onPressed: () {_postEstimateRequest(submitEmail, emailTitle, _companyNameTC.text + " " + _contactNameTC.text + " " + _contactNumberTC.text);Navigator.of(context).pop();},
+                onPressed: () {_postEstimateRequest(
+                    submitEmail,
+                    emailTitle,
+                    "Company Name: " + _companyNameTC.text + "\n\n" + "Contact Name: " + " " +  _contactNameTC.text + "\n\n" + "Contact Number: " +  _contactNumberTC.text + "\n\n" + "Service Notes: " + _serviceNotesTC.text + "\n\n\n\n\n\n" + "*this estiamte was submitted using the mobile app");Navigator.of(context).pop();},
                 child: new Text(
                   submitTrue,
                   style: new TextStyle(color: kUltraSoundOrange600),
