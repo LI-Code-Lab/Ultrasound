@@ -21,7 +21,7 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
   final TextEditingController _serviceNotesTC = new TextEditingController();
 
   final emailTitle = "New Estimate Request";
-  final submitEmail = "appdevbri@gmail.com";
+  final submitEmail = "info@uscultrasound.com";
   final submitTitle = 'Submit Estimate';
   final submitContent =
       "This will submit your estimate to USC for review. Once submitted a representative will contact you shortly. Are you sure?";
