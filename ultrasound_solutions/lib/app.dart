@@ -6,6 +6,7 @@ import 'package:ultrasound_solutions/views/menu_screen.dart';
 import 'package:ultrasound_solutions/models/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
+import 'package:share/share.dart';
 
 class App extends StatefulWidget {
   @override
@@ -40,11 +41,18 @@ class AppState extends State<App> {
 
   void _onOptionClicked(MenuOption option){
     final servicesUrl = 'https://www.uscultrasound.com/services/';
+    final shareUrl = "https://play.google.com/store/apps/details?id=com.licoding.ultrasoundsolutions";
     setState(() {
       _currentOption = option;
     });
     if(option == MenuOption.Services){
       _launchURL(servicesUrl);
+    }
+    if(option == MenuOption.Share){
+      Share.share(shareUrl);
+    }
+    if(option == MenuOption.Feedback){
+      _launchURL(shareUrl);
     }
   }
 }
