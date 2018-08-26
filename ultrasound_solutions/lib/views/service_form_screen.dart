@@ -16,6 +16,7 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
   final listCount = 1;
 
   final TextEditingController _companyNameTC = new TextEditingController();
+  final TextEditingController _addressTC = new TextEditingController();
   final TextEditingController _contactNameTC = new TextEditingController();
   final TextEditingController _contactNumberTC = new TextEditingController();
   final TextEditingController _serviceNotesTC = new TextEditingController();
@@ -50,11 +51,13 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
             children: <Widget>[
               _buildTextFormTitleField("Company Name: "),
               _buildTextFormField(_companyNameTC),
+              _buildTextFormTitleField("Address: "),
+              _buildTextFormField(_addressTC),
               _buildTextFormTitleField("Contact Name: "),
               _buildTextFormField(_contactNameTC),
               _buildTextFormTitleField("Contact Phone Number: "),
               _buildTextFormField(_contactNumberTC),
-              _buildTextFormTitleField("Service Notes: "),
+              _buildTextFormTitleField("Describe Service Required: "),
               _buildTextFormField(_serviceNotesTC),
               _buildSubmitButton(),
             ],
@@ -153,20 +156,23 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
                   _postServiceRequest(
                       submitEmail,
                       emailTitle,
-                      "Company Name: " +
-                          _companyNameTC.text +
-                          "\n\n" +
-                          "Contact Name: " +
-                          " " +
-                          _contactNameTC.text +
-                          "\n\n" +
-                          "Contact Number: " +
-                          _contactNumberTC.text +
-                          "\n\n" +
-                          "Service Notes: " +
-                          _serviceNotesTC.text +
-                          "\n\n\n\n" +
-                          "*this service request was submitted using the mobile app");
+                              "Company Name: " +
+                              _companyNameTC.text +
+                              "\n\n" +
+                              "Address: " +
+                              _addressTC.text +
+                              "\n\n" +
+                              "Contact Name: " +
+                              " " +
+                              _contactNameTC.text +
+                              "\n\n" +
+                              "Contact Number: " +
+                              _contactNumberTC.text +
+                              "\n\n" +
+                              "Service Required Description: " +
+                              _serviceNotesTC.text +
+                              "\n\n\n\n" +
+                              "*this service request was submitted using the mobile app");
                   Navigator.of(context).pop();
                 },
                 child: new Text(

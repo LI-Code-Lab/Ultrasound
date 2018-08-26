@@ -5,6 +5,7 @@ dependencies:
   flutter:
     sdk: flutter
   url_launcher: ^3.0.1
+  splashscreen: 0.0.9
 
   share: ^0.5.2
 
