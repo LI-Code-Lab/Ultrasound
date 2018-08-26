@@ -7,6 +7,7 @@ import 'package:ultrasound_solutions/models/colors.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'dart:async';
 import 'package:share/share.dart';
+import 'package:splashscreen/splashscreen.dart';
 
 class App extends StatefulWidget {
   @override
@@ -16,44 +17,22 @@ class App extends StatefulWidget {
 }
 
 class AppState extends State<App> {
-  MenuOption _currentOption = MenuOption.Home;
-
   @override
   Widget build(BuildContext context) {
-    return _buildApp();
+    return _buildSplashScreen();
   }
 
-  Widget _buildApp(){
+  Widget _buildSplashScreen() {
     return new MaterialApp(
-      theme: _buildTheme(),
-      home: Backdrop(
-        currentOption: MenuOption.Home,
-        frontPanel: HomeScreen(),
-        backPanel: MenuScreen(
-          currentOption: _currentOption,
-          onOptionClick: _onOptionClicked,
-        ),
-        frontTitle: Text('USC & Me'),
-        backTitle: Text("Menu"),
-      ),
+      home: new SplashScreen(
+          seconds: 4,
+          navigateAfterSeconds: new AfterSplash(),
+          image: new Image.network('https://s15.postimg.cc/gn23d840b/image_2usc.png'),
+          backgroundColor: Colors.white,
+          title: new Text(''),
+          styleTextUnderTheLoader: new TextStyle(color: Colors.white),
+          photoSize: 200.0),
     );
-  }
-
-  void _onOptionClicked(MenuOption option){
-    final servicesUrl = 'https://www.uscultrasound.com/services/';
-    final shareUrl = "https://play.google.com/store/apps/details?id=com.licoding.ultrasoundsolutions";
-    setState(() {
-      _currentOption = option;
-    });
-    if(option == MenuOption.Services){
-      _launchURL(servicesUrl);
-    }
-    if(option == MenuOption.Share){
-      Share.share(shareUrl);
-    }
-    if(option == MenuOption.Feedback){
-      _launchURL(shareUrl);
-    }
   }
 }
 
@@ -78,18 +57,19 @@ ThemeData _buildTheme() {
 TextTheme _buildTextTheme(TextTheme base) {
   return base
       .copyWith(
-    headline: base.headline.copyWith(
-      fontWeight: FontWeight.w500,
-    ),
-    title: base.title.copyWith(fontSize: 18.0),
-    caption: base.caption.copyWith(
-      fontWeight: FontWeight.w400,
-      fontSize: 14.0,
-    ),
-  ).apply(
-    displayColor: Colors.red,
-    bodyColor: Colors.white,
-  );
+        headline: base.headline.copyWith(
+          fontWeight: FontWeight.w500,
+        ),
+        title: base.title.copyWith(fontSize: 18.0),
+        caption: base.caption.copyWith(
+          fontWeight: FontWeight.w400,
+          fontSize: 14.0,
+        ),
+      )
+      .apply(
+        displayColor: Colors.red,
+        bodyColor: Colors.white,
+      );
 }
 
 _launchURL(String url) async {
@@ -97,5 +77,55 @@ _launchURL(String url) async {
     await launch(url);
   } else {
     throw 'Could not launch $url';
+  }
+}
+
+class AfterSplash extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    return new AfterSplashState();
+  }
+}
+
+class AfterSplashState extends State<AfterSplash> {
+  MenuOption _currentOption = MenuOption.Home;
+
+  @override
+  Widget build(BuildContext context) {
+    return _buildApp();
+  }
+
+  Widget _buildApp() {
+    return new MaterialApp(
+      theme: _buildTheme(),
+      home: Backdrop(
+        currentOption: MenuOption.Home,
+        frontPanel: HomeScreen(),
+        backPanel: MenuScreen(
+          currentOption: _currentOption,
+          onOptionClick: _onOptionClicked,
+        ),
+        frontTitle: Text('USC & Me'),
+        backTitle: Text("Menu"),
+      ),
+    );
+  }
+
+  void _onOptionClicked(MenuOption option) {
+    final servicesUrl = 'https://www.uscultrasound.com/services/';
+    final shareUrl =
+        "https://play.google.com/store/apps/details?id=com.licoding.ultrasoundsolutions";
+    setState(() {
+      _currentOption = option;
+    });
+    if (option == MenuOption.Services) {
+      _launchURL(servicesUrl);
+    }
+    if (option == MenuOption.Share) {
+      Share.share(shareUrl);
+    }
+    if (option == MenuOption.Feedback) {
+      _launchURL(shareUrl);
+    }
   }
 }
