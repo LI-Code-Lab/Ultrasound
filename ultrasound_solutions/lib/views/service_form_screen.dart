@@ -20,6 +20,9 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
   final TextEditingController _contactNameTC = new TextEditingController();
   final TextEditingController _contactNumberTC = new TextEditingController();
   final TextEditingController _serviceNotesTC = new TextEditingController();
+  final TextEditingController _machineModelTC = new TextEditingController();
+  final TextEditingController _machineMakeTC = new TextEditingController();
+  final TextEditingController _machineSerialNumber = new TextEditingController();
 
   final emailTitle = "New Service Request";
   final submitEmail = "service@uscultrasound.com";
@@ -42,27 +45,35 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
   }
 
   Widget _buildServiceForm() {
-    return Form(
-        key: _formKey,
-        child: new Container(
-          padding: EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              _buildTextFormTitleField("Company Name: "),
-              _buildTextFormField(_companyNameTC),
-              _buildTextFormTitleField("Address: "),
-              _buildTextFormField(_addressTC),
-              _buildTextFormTitleField("Contact Name: "),
-              _buildTextFormField(_contactNameTC),
-              _buildTextFormTitleField("Contact Phone Number: "),
-              _buildTextFormField(_contactNumberTC),
-              _buildTextFormTitleField("Describe Service Required: "),
-              _buildTextFormField(_serviceNotesTC),
-              _buildSubmitButton(),
-            ],
-          ),
-        ));
+    return SingleChildScrollView(
+      child: Form(
+          key: _formKey,
+          child: new Container(
+            padding: EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                _buildTextFormTitleField("Company Name: "),
+                _buildTextFormField(_companyNameTC),
+                _buildTextFormTitleField("Address: "),
+                _buildTextFormField(_addressTC),
+                _buildTextFormTitleField("Machine Make"),
+                _buildTextFormField(_machineMakeTC),
+                _buildTextFormTitleField("Machine Model"),
+                _buildTextFormField(_machineModelTC),
+                _buildTextFormTitleField("Machine Serial Number"),
+                _buildTextFormField(_machineSerialNumber),
+                _buildTextFormTitleField("Contact Name: "),
+                _buildTextFormField(_contactNameTC),
+                _buildTextFormTitleField("Contact Phone Number: "),
+                _buildTextFormField(_contactNumberTC),
+                _buildTextFormTitleField("Describe Service Required: "),
+                _buildTextFormField(_serviceNotesTC),
+                _buildSubmitButton(),
+              ],
+            ),
+          )),
+    );
   }
 
   Widget _buildTextFormField(TextEditingController textController) {
@@ -107,7 +118,7 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
     return new Container(
       padding: EdgeInsets.all(8.0),
       child: Text(title,
-          style: TextStyle(fontSize: 16.0, color: kUltraSoundPrimaryText)),
+          style: TextStyle(fontSize: 14.0, color: kUltraSoundPrimaryText)),
     );
   }
 
@@ -133,7 +144,7 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
                   submitContent,
                   style: new TextStyle(
                     color: kUltraSoundPrimaryText,
-                    fontSize: 16.0,
+                    fontSize: 14.0,
                   ),
                 )
               ],
@@ -162,6 +173,15 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
                               "Address: " +
                               _addressTC.text +
                               "\n\n" +
+                                  "Machine Make: " +
+                                  _machineMakeTC.text +
+                                  "\n\n" +
+                                  "Machine Model: " +
+                                  _machineModelTC.text +
+                                  "\n\n" +
+                                  "Machine Serial Number: " +
+                                  _machineSerialNumber.text +
+                                  "\n\n" +
                               "Contact Name: " +
                               " " +
                               _contactNameTC.text +
