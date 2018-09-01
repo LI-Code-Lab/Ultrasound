@@ -16,9 +16,13 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
   final listCount = 1;
 
   final TextEditingController _companyNameTC = new TextEditingController();
+  final TextEditingController _addressTC = new TextEditingController();
   final TextEditingController _contactNameTC = new TextEditingController();
   final TextEditingController _contactNumberTC = new TextEditingController();
   final TextEditingController _serviceNotesTC = new TextEditingController();
+  final TextEditingController _machineModelTC = new TextEditingController();
+  final TextEditingController _machineMakeTC = new TextEditingController();
+  final TextEditingController _machineSerialNumber = new TextEditingController();
 
   final emailTitle = "New Estimate Request";
   final submitEmail = "info@uscultrasound.com";
@@ -44,26 +48,36 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
   }
 
   Widget _buildServiceForm() {
-    return Form(
-        key: _formKey,
-        child: new Container(
-          padding: EdgeInsets.all(8.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              _buildTextFormTitleField("Company Name: "),
-              _buildTextFormField(_companyNameTC),
-              _buildTextFormTitleField("Contact Name: "),
-              _buildTextFormField(_contactNameTC),
-              _buildTextFormTitleField("Contact Phone Number: "),
-              _buildTextFormField(_contactNumberTC),
-              _buildTextFormTitleField("Estimate Notes: "),
-              _buildTextFormField(_serviceNotesTC),
-              _buildPhotoButton(),
-              _buildSubmitButton(),
-            ],
-          ),
-        ));
+    return SingleChildScrollView(
+      child: Form(
+          key: _formKey,
+          child: new Container(
+            padding: EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                _buildTextFormTitleField("Company Name: "),
+                _buildTextFormField(_companyNameTC),
+                _buildTextFormTitleField("Address: "),
+                _buildTextFormField(_addressTC),
+                _buildTextFormTitleField("Machine Make"),
+                _buildTextFormField(_machineMakeTC),
+                _buildTextFormTitleField("Machine Model"),
+                _buildTextFormField(_machineModelTC),
+                _buildTextFormTitleField("Machine Serial Number"),
+                _buildTextFormField(_machineSerialNumber),
+                _buildTextFormTitleField("Contact Name: "),
+                _buildTextFormField(_contactNameTC),
+                _buildTextFormTitleField("Contact Phone Number: "),
+                _buildTextFormField(_contactNumberTC),
+                _buildTextFormTitleField("Describe Estimate Requirements:  "),
+                _buildTextFormField(_serviceNotesTC),
+                _buildPhotoButton(),
+                _buildSubmitButton(),
+              ],
+            ),
+          )),
+    );
   }
 
   Widget _buildTextFormField(TextEditingController textController) {
@@ -180,6 +194,18 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
                       emailTitle,
                       "Company Name: " +
                           _companyNameTC.text +
+                          "\n\n" +
+                          "Address: " +
+                          _addressTC.text +
+                          "\n\n" +
+                          "Machine Make: " +
+                          _machineMakeTC.text +
+                          "\n\n" +
+                          "Machine Model: " +
+                          _machineModelTC.text +
+                          "\n\n" +
+                          "Machine Serial Number: " +
+                          _machineSerialNumber.text +
                           "\n\n" +
                           "Contact Name: " +
                           " " +
