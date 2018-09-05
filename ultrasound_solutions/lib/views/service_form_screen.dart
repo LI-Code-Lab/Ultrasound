@@ -1,8 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:ultrasound_solutions/models/colors.dart';
 import 'dart:async';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:mailer/mailer.dart';
 
 class ServiceFormScreen extends StatefulWidget {
   @override
@@ -31,6 +35,8 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
       "This will submit your service request to USC for review. Once submitted a representative will contact you shortly. Are you sure?";
   final submitTrue = "Submit";
   final submitFalse = "Cancel";
+
+  File _serviceImage;
 
   @override
   Widget build(BuildContext context) {
@@ -125,6 +131,10 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
   void _postServiceRequest(String toMailId, String subject, String body) {
     var url = 'mailto:$toMailId?subject=$subject&body=$body';
     launch(url);
+  }
+
+  Future _buildImagePicker() async {
+    _serviceImage = await ImagePicker.pickImage(source: ImageSource.gallery);
   }
 
   Future<Null> _neverSatisfied() async {

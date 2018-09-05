@@ -6,6 +6,8 @@ dependencies:
     sdk: flutter
   url_launcher: ^3.0.1
   splashscreen: ^0.0.9
+  image_picker: ^0.4.10
+  mailer: ^1.2.3
 
   share: ^0.5.2
 

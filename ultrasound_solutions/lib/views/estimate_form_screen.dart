@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:mailer/mailer.dart';
 import 'package:ultrasound_solutions/models/colors.dart';
 import 'dart:async';
 import 'package:url_launcher/url_launcher.dart';
@@ -31,6 +35,8 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
       "This will submit your estimate to USC for review. Once submitted a representative will contact you shortly. Are you sure?";
   final submitTrue = "Submit";
   final submitFalse = "Cancel";
+
+  File _serviceImage;
 
   //final serviceEmail = "service@uscultrasound.com";
   //final submitEmail = "info@uscultrasound.com";
@@ -101,7 +107,9 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
       padding: EdgeInsets.all(16.0),
       child: new Center(
         child: RaisedButton(
-          onPressed: () {},
+          onPressed: () {
+            _buildImagePicker();
+          },
           child: Text(
             "Add Photos",
             style: TextStyle(color: kUltraSoundSurfaceWhite),
@@ -141,15 +149,61 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
     );
   }
 
-  void _postEstimateRequest(String toMailId, String subject, String body) {
-    var url = 'mailto:$toMailId?subject=$subject&body=$body';
-    launch(url);
+//  void _postEstimateRequest(String toMailId, String subject, String body) {
+//    var url = 'mailto:$toMailId?subject=$subject&body=$body';
+//    launch(url);
+//  }
+
+  void _postEstimateRequest(String toMailId, String subject, String body, File attachment, String senderMailId) {
+    var options = new GmailSmtpOptions()
+      ..username = 'uscappdev@gmail.com'
+      ..password = 'Test@1234';
+
+    var emailTransport = new SmtpTransport(options);
+
+    var envelope = new Envelope()
+      ..from = senderMailId
+      ..recipients.add(toMailId)
+      ..subject = subject
+    //  ..attachments.add(new Attachment(file: attachment))
+      ..text = body;
+
+    emailTransport.send(envelope)
+        .then((envelope) => _buildSendDialog("Request has been submitted successfully", "Success!"))
+        .catchError((e) => _buildSendDialog("Request has failed to send because of " + e, "Failed"));
   }
 
-  void _addImage() {
-    //open camera or gallery
-    //upload selected images to firebase storage
-    //use link to images in email
+  Future<Null> _buildSendDialog(String message, String title) async{
+    return showDialog<Null>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return new AlertDialog(
+          title: new Text('Success!'),
+          content: new SingleChildScrollView(
+            child: new ListBody(
+              children: <Widget>[
+                new Text(message),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+
+
+  Future _buildImagePicker() async {
+    _serviceImage = await ImagePicker.pickImage(source: ImageSource.gallery);
   }
 
   Future<Null> _neverSatisfied() async {
@@ -190,7 +244,7 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
             new FlatButton(
                 onPressed: () {
                   _postEstimateRequest(
-                      submitEmail,
+                      "appdevbri@gmail.com",
                       emailTitle,
                       "Company Name: " +
                           _companyNameTC.text +
@@ -217,7 +271,8 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
                           "Estimate Notes: " +
                           _serviceNotesTC.text +
                           "\n\n\n\n" +
-                          "*this estimate was submitted using the mobile app");
+                          "*this estimate was submitted using the mobile app",
+                  _serviceImage, "uscappdevelopment@gmail.com");
                   Navigator.of(context).pop();
                 },
                 child: new Text(
