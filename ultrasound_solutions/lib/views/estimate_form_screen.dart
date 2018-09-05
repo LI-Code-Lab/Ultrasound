@@ -244,7 +244,7 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
             new FlatButton(
                 onPressed: () {
                   _postEstimateRequest(
-                      "appdevbri@gmail.com",
+                      submitEmail,
                       emailTitle,
                       "Company Name: " +
                           _companyNameTC.text +
