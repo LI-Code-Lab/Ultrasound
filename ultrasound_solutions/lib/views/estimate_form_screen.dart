@@ -6,7 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:mailer/mailer.dart';
 import 'package:ultrasound_solutions/models/colors.dart';
 import 'dart:async';
-import 'package:url_launcher/url_launcher.dart';
 
 class EstimateFormScreen extends StatefulWidget {
   @override
@@ -37,6 +36,7 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
   final submitFalse = "Cancel";
 
   File _serviceImage;
+  bool _progressBarActive = false;
 
   //final serviceEmail = "service@uscultrasound.com";
   //final submitEmail = "info@uscultrasound.com";
@@ -62,6 +62,7 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                _buildProgressIndicator(),
                 _buildTextFormTitleField("Company Name: "),
                 _buildTextFormField(_companyNameTC),
                 _buildTextFormTitleField("Address: "),
@@ -108,7 +109,7 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
       child: new Center(
         child: RaisedButton(
           onPressed: () {
-            _buildImagePicker();
+            _buildImageChoiceDialog("Choose a method to upload an image.", "Upload Image");
           },
           child: Text(
             "Add Photos",
@@ -119,6 +120,16 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
     );
   }
 
+  Widget _buildProgressIndicator() {
+    return !_progressBarActive ? new Container() : const Center(child: CircularProgressIndicator());
+  }
+
+  void toggleProgressIndicator(){
+    setState(() {
+      _progressBarActive = !_progressBarActive;
+    });
+  }
+
   Widget _buildSubmitButton() {
     return new Container(
       padding: EdgeInsets.all(16.0),
@@ -127,7 +138,37 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
           onPressed: () {
             if (_formKey.currentState.validate()) {
               //if the form is valid do something
-              _neverSatisfied();
+              toggleProgressIndicator();
+              _postEstimateRequest(
+                  submitEmail,
+                  emailTitle,
+                  "Company Name: " +
+                      _companyNameTC.text +
+                      "\n\n" +
+                      "Address: " +
+                      _addressTC.text +
+                      "\n\n" +
+                      "Machine Make: " +
+                      _machineMakeTC.text +
+                      "\n\n" +
+                      "Machine Model: " +
+                      _machineModelTC.text +
+                      "\n\n" +
+                      "Machine Serial Number: " +
+                      _machineSerialNumber.text +
+                      "\n\n" +
+                      "Contact Name: " +
+                      " " +
+                      _contactNameTC.text +
+                      "\n\n" +
+                      "Contact Number: " +
+                      _contactNumberTC.text +
+                      "\n\n" +
+                      "Estimate Notes: " +
+                      _serviceNotesTC.text +
+                      "\n\n\n\n" +
+                      "*this estimate was submitted using the mobile app",
+                  _serviceImage, "uscappdevelopment@gmail.com");
             }
           },
           child: Text(
@@ -171,6 +212,8 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
     emailTransport.send(envelope)
         .then((envelope) => _buildSendDialog("Request has been submitted successfully", "Success!"))
         .catchError((e) => _buildSendDialog("Request has failed to send because of " + e, "Failed"));
+
+    toggleProgressIndicator();
   }
 
   Future<Null> _buildSendDialog(String message, String title) async{
@@ -200,10 +243,47 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
     );
   }
 
-
+  Future<Null> _buildImageChoiceDialog(String message, String title) async{
+    return showDialog<Null>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return new AlertDialog(
+          title: new Text(title),
+          content: new SingleChildScrollView(
+            child: new ListBody(
+              children: <Widget>[
+                new Text(message),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text('Gallery'),
+              onPressed: () {
+                _buildImagePicker();
+                Navigator.of(context).pop();
+              },
+            ),
+            new FlatButton(
+              child: new Text('Camera'),
+              onPressed: () {
+                _buildCamera();
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
 
   Future _buildImagePicker() async {
     _serviceImage = await ImagePicker.pickImage(source: ImageSource.gallery);
+  }
+
+  Future _buildCamera() async {
+    _serviceImage = await ImagePicker.pickImage(source: ImageSource.camera);
   }
 
   Future<Null> _neverSatisfied() async {

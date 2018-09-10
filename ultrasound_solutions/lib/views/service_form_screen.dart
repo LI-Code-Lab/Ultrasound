@@ -75,6 +75,7 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
                 _buildTextFormField(_contactNumberTC),
                 _buildTextFormTitleField("Describe Service Required: "),
                 _buildTextFormField(_serviceNotesTC),
+                _buildPhotoButton(),
                 _buildSubmitButton(),
               ],
             ),
@@ -98,6 +99,23 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
     );
   }
 
+  Widget _buildPhotoButton() {
+    return new Container(
+      padding: EdgeInsets.all(16.0),
+      child: new Center(
+        child: RaisedButton(
+          onPressed: () {
+            _buildImageChoiceDialog("Choose a method to upload an image.", "Upload Image");
+          },
+          child: Text(
+            "Add Photos",
+            style: TextStyle(color: kUltraSoundSurfaceWhite),
+          ),
+        ),
+      ),
+    );
+  }
+
   Widget _buildSubmitButton() {
     return new Container(
       padding: EdgeInsets.all(16.0),
@@ -106,7 +124,35 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
           onPressed: () {
             if (_formKey.currentState.validate()) {
               //if the form is valid do something
-              _neverSatisfied();
+              _postServiceRequest(
+                  submitEmail,
+                  emailTitle,
+                  "Company Name: " +
+                      _companyNameTC.text +
+                      "\n\n" +
+                      "Address: " +
+                      _addressTC.text +
+                      "\n\n" +
+                      "Machine Make: " +
+                      _machineMakeTC.text +
+                      "\n\n" +
+                      "Machine Model: " +
+                      _machineModelTC.text +
+                      "\n\n" +
+                      "Machine Serial Number: " +
+                      _machineSerialNumber.text +
+                      "\n\n" +
+                      "Contact Name: " +
+                      " " +
+                      _contactNameTC.text +
+                      "\n\n" +
+                      "Contact Number: " +
+                      _contactNumberTC.text +
+                      "\n\n" +
+                      "Service Required Description: " +
+                      _serviceNotesTC.text +
+                      "\n\n\n\n" +
+                      "*this service request was submitted using the mobile app");
             }
           },
           child: Text(
@@ -133,8 +179,47 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
     launch(url);
   }
 
+  Future<Null> _buildImageChoiceDialog(String message, String title) async{
+    return showDialog<Null>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return new AlertDialog(
+          title: new Text(title),
+          content: new SingleChildScrollView(
+            child: new ListBody(
+              children: <Widget>[
+                new Text(message),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text('Gallery'),
+              onPressed: () {
+                _buildImagePicker();
+                Navigator.of(context).pop();
+              },
+            ),
+            new FlatButton(
+              child: new Text('Camera'),
+              onPressed: () {
+                _buildCamera();
+                Navigator.of(context).pop();
+              },
+            )
+          ],
+        );
+      },
+    );
+  }
+
   Future _buildImagePicker() async {
     _serviceImage = await ImagePicker.pickImage(source: ImageSource.gallery);
+  }
+
+  Future _buildCamera() async {
+    _serviceImage = await ImagePicker.pickImage(source: ImageSource.camera);
   }
 
   Future<Null> _neverSatisfied() async {
