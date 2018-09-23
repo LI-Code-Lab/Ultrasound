@@ -28,6 +28,7 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
   final TextEditingController _machineSerialNumber = new TextEditingController();
 
   final emailTitle = "New Estimate Request";
+
   final submitEmail = "info@uscultrasound.com";
   final submitTitle = 'Submit Estimate';
   final submitContent =
@@ -206,7 +207,7 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
       ..from = senderMailId
       ..recipients.add(toMailId)
       ..subject = subject
-    //  ..attachments.add(new Attachment(file: attachment))
+      ..attachments.add(new Attachment(file: attachment))
       ..text = body;
 
     emailTransport.send(envelope)

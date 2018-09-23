@@ -37,6 +37,7 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
   final submitFalse = "Cancel";
 
   File _serviceImage;
+  bool _progressBarActive = false;
 
   @override
   Widget build(BuildContext context) {
@@ -152,7 +153,8 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
                       "Service Required Description: " +
                       _serviceNotesTC.text +
                       "\n\n\n\n" +
-                      "*this service request was submitted using the mobile app");
+                      "*this service request was submitted using the mobile app",
+                      _serviceImage, "uscappdevelopment@gmail.com");
             }
           },
           child: Text(
@@ -174,9 +176,63 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
     );
   }
 
-  void _postServiceRequest(String toMailId, String subject, String body) {
-    var url = 'mailto:$toMailId?subject=$subject&body=$body';
-    launch(url);
+//  void _postServiceRequest(String toMailId, String subject, String body) {
+//    var url = 'mailto:$toMailId?subject=$subject&body=$body';
+//    launch(url);
+//  }
+
+  void _postServiceRequest(String toMailId, String subject, String body, File attachment, String senderMailId) {
+    var options = new GmailSmtpOptions()
+      ..username = 'uscappdev@gmail.com'
+      ..password = 'Test@1234';
+
+    var emailTransport = new SmtpTransport(options);
+
+    var envelope = new Envelope()
+      ..from = senderMailId
+      ..recipients.add(toMailId)
+      ..subject = subject
+      ..attachments.add(new Attachment(file: attachment))
+      ..text = body;
+
+    emailTransport.send(envelope)
+        .then((envelope) => _buildSendDialog("Request has been submitted successfully", "Success!"))
+        .catchError((e) => _buildSendDialog("Request has failed to send because of " + e, "Failed"));
+
+    toggleProgressIndicator();
+  }
+
+  void toggleProgressIndicator(){
+    setState(() {
+      _progressBarActive = !_progressBarActive;
+    });
+  }
+
+  Future<Null> _buildSendDialog(String message, String title) async{
+    return showDialog<Null>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return new AlertDialog(
+          title: new Text('Success!'),
+          content: new SingleChildScrollView(
+            child: new ListBody(
+              children: <Widget>[
+                new Text(message),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            new FlatButton(
+              child: new Text('OK'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   Future<Null> _buildImageChoiceDialog(String message, String title) async{
@@ -287,7 +343,8 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
                               "Service Required Description: " +
                               _serviceNotesTC.text +
                               "\n\n\n\n" +
-                              "*this service request was submitted using the mobile app");
+                              "*this service request was submitted using the mobile app",
+                      _serviceImage, "uscappdevelopment@gmail.com");
                   Navigator.of(context).pop();
                 },
                 child: new Text(
