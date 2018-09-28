@@ -41,6 +41,9 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
   File _serviceImage;
   bool _progressBarActive = false;
   var fileName = "";
+  var serviceTimeFrame = "Select Time";
+  var serviceDate = "Select Date";
+  var setServiceDate = "Select Estimate Date";
 
   //final serviceEmail = "service@uscultrasound.com";
   //final submitEmail = "info@uscultrasound.com";
@@ -85,6 +88,7 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
                 _buildTextFormField(_serviceNotesTC),
                 _buildFileText(),
                 _buildPhotoButton(),
+                _buildDatePicker(),
                 _buildSubmitButton(),
               ],
             ),
@@ -178,6 +182,9 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
                       "Contact Number: " +
                       _contactNumberTC.text +
                       "\n\n" +
+                      "Date and Time: " +
+                      serviceDate + " " + serviceTimeFrame +
+                      "\n\n" +
                       "Estimate Notes: " +
                       _serviceNotesTC.text +
                       "\n\n\n\n" +
@@ -202,6 +209,90 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
       child: Text(title,
           style: TextStyle(fontSize: 16.0, color: kUltraSoundPrimaryText)),
     );
+  }
+
+  Widget _buildDatePicker() {
+    return new Container(
+      padding: new EdgeInsets.all(8.0),
+      child: new Center(
+        child: new RaisedButton(
+            onPressed: () {
+              _showDateSelectDialog();
+            },
+            child: new Text(setServiceDate,
+                style: new TextStyle(fontSize: 14.0, color: Colors.white))),
+      ),
+    );
+  }
+
+  Future<Null> _showDateSelectDialog() async {
+    return showDialog<Null>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return new SimpleDialog(
+          title: new Text("Service Date"),
+          children: <Widget>[
+            new FlatButton(onPressed: () {
+              _showDateDialog();
+            }, child: new Text(serviceDate)),
+            new FlatButton(onPressed: () {
+              _showTimeDialog();
+            }, child: new Text(serviceTimeFrame)),
+            new FlatButton(onPressed: () {
+              setState(() {
+                setServiceDate = serviceDate + " " + serviceTimeFrame;
+              });
+              Navigator.pop(context);
+            }, child: new Text("Ok", style: new TextStyle(fontSize: 14.0, color: kUltraSoundOrange600),))
+          ],
+        );
+      },
+    );
+  }
+
+  Future<Null> _showTimeDialog() {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: new Text("Pick Time Frame"),
+          children: <Widget>[
+            new FlatButton(onPressed: () {
+              setTimeFrameState("8:30am - 12:30pm");
+              Navigator.pop(context);
+            }, child: new Text("8:30am - 12:30pm", style: new TextStyle(fontSize: 14.0, color: Colors.black))),
+            new FlatButton(onPressed: () {
+              setTimeFrameState("1:00pm - 5:00pm");
+              Navigator.pop(context);
+            }, child: new Text("1:00pm - 5:00pm", style: new TextStyle(fontSize: 14.0, color: Colors.black))),
+          ],
+        );
+      },
+    );
+  }
+
+  void setTimeFrameState(String timeFrame){
+    setState(() {
+      serviceTimeFrame = timeFrame;
+    });
+  }
+
+  void setDateState(String date){
+    setState(() {
+      serviceDate = date;
+    });
+  }
+
+  Future<Null> _showDateDialog() async {
+    final DateTime picked = await showDatePicker(
+      context: context,
+      initialDate: new DateTime.now(),
+      firstDate: new DateTime.now().subtract(new Duration(days: 30)),
+      lastDate: new DateTime.now().add(new Duration(days: 30)),
+    );
+    setDateState(picked.month.toString() + " / " + picked.day.toString() + " / " + picked.year.toString());
   }
 
 //  void _postEstimateRequest(String toMailId, String subject, String body) {
