@@ -26,7 +26,8 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
   final TextEditingController _serviceNotesTC = new TextEditingController();
   final TextEditingController _machineModelTC = new TextEditingController();
   final TextEditingController _machineMakeTC = new TextEditingController();
-  final TextEditingController _machineSerialNumber = new TextEditingController();
+  final TextEditingController _machineSerialNumber =
+      new TextEditingController();
 
   final emailTitle = "New Service Request";
   //final submitEmail = "service@uscultrasound.com";
@@ -40,8 +41,11 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
 
   File _serviceImage;
   bool _progressBarActive = false;
-  String serviceType = "Select Services Needed";
+  var serviceType = "Select Services Needed";
+  var setServiceDate = "Select Service Date";
   var fileName = "";
+  var serviceTimeFrame = "Select Time";
+  var serviceDate = "Select Date";
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +87,7 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
                 _buildTextFormField(_serviceNotesTC),
                 _buildFileText(),
                 _buildPhotoButton(),
+                _buildDatePicker(),
                 _buildSubmitButton(),
               ],
             ),
@@ -112,7 +117,8 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
       child: new Center(
         child: RaisedButton(
           onPressed: () {
-            _buildImageChoiceDialog("Choose a method to upload an image.", "Upload Image");
+            _buildImageChoiceDialog(
+                "Choose a method to upload an image.", "Upload Image");
           },
           child: Text(
             "Add Photos",
@@ -122,19 +128,22 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
       ),
     );
   }
-  
+
   Widget _buildServiceTypeButton() {
     return Container(
       padding: new EdgeInsets.all(16.0),
       child: Center(
         child: new RaisedButton(
             onPressed: _showServiceTypeDialog,
-            child: new Text(serviceType, style: new TextStyle(fontSize: 14.0, color: Colors.white),)),
+            child: new Text(
+              serviceType,
+              style: new TextStyle(fontSize: 14.0, color: Colors.white),
+            )),
       ),
     );
   }
 
-  Future<Null> _showServiceTypeDialog() async{
+  Future<Null> _showServiceTypeDialog() async {
     return showDialog<Null>(
       context: context,
       barrierDismissible: true, // user must tap button!
@@ -142,25 +151,32 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
         return new SimpleDialog(
           title: new Text("Services Needed"),
           children: <Widget>[
-            new FlatButton(onPressed: () {
-              setServiceTypeState("Services Needed: Evaluate System");
-              Navigator.pop(context);
-              }, child: new Text("Evaluate System")),
-            new FlatButton(onPressed: () {
-              setServiceTypeState("Services Needed: Preventive Maintenance");
-              Navigator.pop(context);
-            }, child: new Text("Preventive Maintenance")),
-            new FlatButton(onPressed: () {
-              setServiceTypeState("Services Needed: Probe Evaluation");
-              Navigator.pop(context);
-            }, child: new Text("Probe Evaluation"))
+            new FlatButton(
+                onPressed: () {
+                  setServiceTypeState("Services Needed: Evaluate System");
+                  Navigator.pop(context);
+                },
+                child: new Text("Evaluate System")),
+            new FlatButton(
+                onPressed: () {
+                  setServiceTypeState(
+                      "Services Needed: Preventive Maintenance");
+                  Navigator.pop(context);
+                },
+                child: new Text("Preventive Maintenance")),
+            new FlatButton(
+                onPressed: () {
+                  setServiceTypeState("Services Needed: Probe Evaluation");
+                  Navigator.pop(context);
+                },
+                child: new Text("Probe Evaluation"))
           ],
         );
       },
     );
   }
 
-  void setServiceTypeState(String type){
+  void setServiceTypeState(String type) {
     setState(() {
       serviceType = type;
     });
@@ -199,6 +215,9 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
                       "Contact Number: " +
                       _contactNumberTC.text +
                       "\n\n" +
+                      "Date and Time: " +
+                      serviceDate + " " + serviceTimeFrame +
+                      "\n\n" +
                       "Services Needed: " +
                       serviceType +
                       "\n\n" +
@@ -206,7 +225,8 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
                       _serviceNotesTC.text +
                       "\n\n\n\n" +
                       "*this service request was submitted using the mobile app",
-                      _serviceImage, "uscappdevelopment@gmail.com");
+                  _serviceImage,
+                  "uscappdevelopment@gmail.com");
             }
           },
           child: Text(
@@ -228,13 +248,96 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
     );
   }
 
-  Widget _buildFileText(){
+  Widget _buildFileText() {
     return Padding(
       padding: const EdgeInsets.fromLTRB(4.0, 8.0, 4.0, 0.0),
-      child: new Text(
-          fileName,
+      child: new Text(fileName,
           style: new TextStyle(fontSize: 12.0, color: Colors.grey)),
     );
+  }
+
+  Widget _buildDatePicker() {
+    return new Container(
+      padding: new EdgeInsets.all(8.0),
+      child: new Center(
+        child: new RaisedButton(
+            onPressed: () {
+              _showDateSelectDialog();
+            },
+            child: new Text(setServiceDate,
+                style: new TextStyle(fontSize: 14.0, color: Colors.white))),
+      ),
+    );
+  }
+
+  Future<Null> _showDateSelectDialog() async {
+    return showDialog<Null>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return new SimpleDialog(
+          title: new Text("Service Date"),
+          children: <Widget>[
+            new FlatButton(onPressed: () {
+              _showDateDialog();
+              }, child: new Text(serviceDate)),
+            new FlatButton(onPressed: () {
+              _showTimeDialog();
+              }, child: new Text(serviceTimeFrame)),
+            new FlatButton(onPressed: () {
+              setState(() {
+                setServiceDate = serviceDate + " " + serviceTimeFrame;
+              });
+              Navigator.pop(context);
+              }, child: new Text("Ok", style: new TextStyle(fontSize: 14.0, color: kUltraSoundOrange600),))
+          ],
+        );
+      },
+    );
+  }
+
+  Future<Null> _showTimeDialog() {
+    return showDialog(
+      context: context,
+      barrierDismissible: false,
+      builder: (BuildContext context) {
+        return SimpleDialog(
+          title: new Text("Pick Time Frame"),
+          children: <Widget>[
+            new FlatButton(onPressed: () {
+              setTimeFrameState("8:30am - 12:30pm");
+              Navigator.pop(context);
+            }, child: new Text("8:30am - 12:30pm", style: new TextStyle(fontSize: 14.0, color: Colors.black))),
+            new FlatButton(onPressed: () {
+              setTimeFrameState("1:00pm - 5:00pm");
+              Navigator.pop(context);
+            }, child: new Text("1:00pm - 5:00pm", style: new TextStyle(fontSize: 14.0, color: Colors.black))),
+          ],
+        );
+      },
+    );
+  }
+
+  void setTimeFrameState(String timeFrame){
+    setState(() {
+      serviceTimeFrame = timeFrame;
+    });
+  }
+
+  void setDateState(String date){
+    setState(() {
+      serviceDate = date;
+    });
+  }
+
+  Future<Null> _showDateDialog() async {
+    final DateTime picked = await showDatePicker(
+        context: context,
+        initialDate: new DateTime.now(),
+        firstDate: new DateTime.now().subtract(new Duration(days: 30)),
+        lastDate: new DateTime.now().add(new Duration(days: 30)),
+    );
+    setDateState(picked.month.toString() + " / " + picked.day.toString() + " / " + picked.year.toString());
   }
 
 //  void _postServiceRequest(String toMailId, String subject, String body) {
@@ -242,7 +345,8 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
 //    launch(url);
 //  }
 
-  void _postServiceRequest(String toMailId, String subject, String body, File attachment, String senderMailId) {
+  void _postServiceRequest(String toMailId, String subject, String body,
+      File attachment, String senderMailId) {
     var options = new GmailSmtpOptions()
       ..username = 'uscappdev@gmail.com'
       ..password = 'Test@1234';
@@ -256,20 +360,23 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
       ..attachments.add(new Attachment(file: attachment))
       ..text = body;
 
-    emailTransport.send(envelope)
-        .then((envelope) => _buildSendDialog("Request has been submitted successfully", "Success!"))
-        .catchError((e) => _buildSendDialog("Request has failed to send because of " + e, "Failed"));
+    emailTransport
+        .send(envelope)
+        .then((envelope) => _buildSendDialog(
+            "Request has been submitted successfully", "Success!"))
+        .catchError((e) => _buildSendDialog(
+            "Request has failed to send because of " + e, "Failed"));
 
     toggleProgressIndicator();
   }
 
-  void toggleProgressIndicator(){
+  void toggleProgressIndicator() {
     setState(() {
       _progressBarActive = !_progressBarActive;
     });
   }
 
-  Future<Null> _buildSendDialog(String message, String title) async{
+  Future<Null> _buildSendDialog(String message, String title) async {
     return showDialog<Null>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -296,7 +403,7 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
     );
   }
 
-  Future<Null> _buildImageChoiceDialog(String message, String title) async{
+  Future<Null> _buildImageChoiceDialog(String message, String title) async {
     return showDialog<Null>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -385,33 +492,40 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
                   _postServiceRequest(
                       submitEmail,
                       emailTitle,
-                              "Company Name: " +
-                              _companyNameTC.text +
-                              "\n\n" +
-                              "Address: " +
-                              _addressTC.text +
-                              "\n\n" +
-                                  "Machine Make: " +
-                                  _machineMakeTC.text +
-                                  "\n\n" +
-                                  "Machine Model: " +
-                                  _machineModelTC.text +
-                                  "\n\n" +
-                                  "Machine Serial Number: " +
-                                  _machineSerialNumber.text +
-                                  "\n\n" +
-                              "Contact Name: " +
-                              " " +
-                              _contactNameTC.text +
-                              "\n\n" +
-                              "Contact Number: " +
-                              _contactNumberTC.text +
-                              "\n\n" +
-                              "Service Required Description: " +
-                              _serviceNotesTC.text +
-                              "\n\n\n\n" +
-                              "*this service request was submitted using the mobile app",
-                      _serviceImage, "uscappdevelopment@gmail.com");
+                      "Company Name: " +
+                          _companyNameTC.text +
+                          "\n\n" +
+                          "Address: " +
+                          _addressTC.text +
+                          "\n\n" +
+                          "Machine Make: " +
+                          _machineMakeTC.text +
+                          "\n\n" +
+                          "Machine Model: " +
+                          _machineModelTC.text +
+                          "\n\n" +
+                          "Machine Serial Number: " +
+                          _machineSerialNumber.text +
+                          "\n\n" +
+                          "Contact Name: " +
+                          " " +
+                          _contactNameTC.text +
+                          "\n\n" +
+                          "Contact Number: " +
+                          _contactNumberTC.text +
+                          "\n\n" +
+                          "Date and Time: " +
+                          serviceDate + serviceTimeFrame +
+                          "\n\n" +
+                          "Service Needed: " +
+                          serviceType +
+                          "\n\n" +
+                          "Service Required Description: " +
+                          _serviceNotesTC.text +
+                          "\n\n\n\n" +
+                          "*this service request was submitted using the mobile app",
+                      _serviceImage,
+                      "uscappdevelopment@gmail.com");
                   Navigator.of(context).pop();
                 },
                 child: new Text(

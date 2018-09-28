@@ -18,11 +18,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="service_form_screen.dart" pinned="false" current-in-tab="false">
+      <file leaf-file-name="service_form_screen.dart" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/lib/views/service_form_screen.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1360">
-              <caret line="235" column="65" lean-forward="false" selection-start-line="235" selection-start-column="65" selection-end-line="235" selection-end-column="65" />
+            <state relative-caret-position="148">
+              <caret line="215" column="38" lean-forward="false" selection-start-line="215" selection-start-column="38" selection-end-line="215" selection-end-column="38" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
               </folding>
@@ -30,11 +30,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="estimate_form_screen.dart" pinned="false" current-in-tab="true">
+      <file leaf-file-name="estimate_form_screen.dart" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/lib/views/estimate_form_screen.dart">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-702">
-              <caret line="302" column="48" lean-forward="false" selection-start-line="302" selection-start-column="48" selection-end-line="302" selection-end-column="48" />
+            <state relative-caret-position="337">
+              <caret line="366" column="34" lean-forward="true" selection-start-line="366" selection-start-column="34" selection-end-line="366" selection-end-column="34" />
               <folding>
                 <element signature="e#0#17#0" expanded="true" />
               </folding>
@@ -91,8 +91,8 @@
         <option value="$PROJECT_DIR$/pubspec.yaml" />
         <option value="$PROJECT_DIR$/android/build.gradle" />
         <option value="$PROJECT_DIR$/android/app/build.gradle" />
-        <option value="$PROJECT_DIR$/lib/views/service_form_screen.dart" />
         <option value="$PROJECT_DIR$/lib/views/estimate_form_screen.dart" />
+        <option value="$PROJECT_DIR$/lib/views/service_form_screen.dart" />
       </list>
     </option>
   </component>
@@ -292,7 +292,7 @@
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.17179903" sideWeight="0.50292885" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Dart Analysis" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32901135" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15508886" sideWeight="0.49707112" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14378029" sideWeight="0.49707112" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2552504" sideWeight="0.49707112" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Flutter Outline" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -326,14 +326,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/android/app/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="525">
-          <caret line="35" column="24" lean-forward="false" selection-start-line="35" selection-start-column="24" selection-end-line="35" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/lib/views/home_screen.dart">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1095">
@@ -674,20 +666,28 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/views/service_form_screen.dart">
+    <entry file="file://$PROJECT_DIR$/../../FlutterSDK/flutter/packages/flutter/lib/src/material/date_picker.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1360">
-          <caret line="235" column="65" lean-forward="false" selection-start-line="235" selection-start-column="65" selection-end-line="235" selection-end-column="65" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/lib/views/estimate_form_screen.dart">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="337">
+          <caret line="366" column="34" lean-forward="true" selection-start-line="366" selection-start-column="34" selection-end-line="366" selection-end-column="34" />
           <folding>
             <element signature="e#0#17#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/lib/views/estimate_form_screen.dart">
+    <entry file="file://$PROJECT_DIR$/lib/views/service_form_screen.dart">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-702">
-          <caret line="302" column="48" lean-forward="false" selection-start-line="302" selection-start-column="48" selection-end-line="302" selection-end-column="48" />
+        <state relative-caret-position="148">
+          <caret line="215" column="38" lean-forward="false" selection-start-line="215" selection-start-column="38" selection-end-line="215" selection-end-column="38" />
           <folding>
             <element signature="e#0#17#0" expanded="true" />
           </folding>
