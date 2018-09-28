@@ -29,7 +29,9 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
 
   final emailTitle = "New Estimate Request";
 
-  final submitEmail = "info@uscultrasound.com";
+//  final submitEmail = "info@uscultrasound.com";
+  final submitEmail = "appdevbri@gmail.com";
+
   final submitTitle = 'Submit Estimate';
   final submitContent =
       "This will submit your estimate to USC for review. Once submitted a representative will contact you shortly. Are you sure?";
@@ -38,6 +40,7 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
 
   File _serviceImage;
   bool _progressBarActive = false;
+  var fileName = "";
 
   //final serviceEmail = "service@uscultrasound.com";
   //final submitEmail = "info@uscultrasound.com";
@@ -80,6 +83,7 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
                 _buildTextFormField(_contactNumberTC),
                 _buildTextFormTitleField("Describe Estimate Requirements:  "),
                 _buildTextFormField(_serviceNotesTC),
+                _buildFileText(),
                 _buildPhotoButton(),
                 _buildSubmitButton(),
               ],
@@ -131,9 +135,18 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
     });
   }
 
+  Widget _buildFileText(){
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(4.0, 8.0, 4.0, 0.0),
+      child: new Text(
+          fileName,
+          style: new TextStyle(fontSize: 12.0, color: Colors.grey)),
+    );
+  }
+
   Widget _buildSubmitButton() {
     return new Container(
-      padding: EdgeInsets.all(16.0),
+      padding: EdgeInsets.fromLTRB(16.0, 4.0, 16.0, 16.0),
       child: new Center(
         child: RaisedButton(
           onPressed: () {
@@ -281,10 +294,16 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
 
   Future _buildImagePicker() async {
     _serviceImage = await ImagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      fileName = "Attachment:: " + _serviceImage.path;
+    });
   }
 
   Future _buildCamera() async {
     _serviceImage = await ImagePicker.pickImage(source: ImageSource.camera);
+    setState(() {
+      fileName = "Attachment:: " + _serviceImage.path;
+    });
   }
 
   Future<Null> _neverSatisfied() async {

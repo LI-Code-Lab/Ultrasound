@@ -29,7 +29,9 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
   final TextEditingController _machineSerialNumber = new TextEditingController();
 
   final emailTitle = "New Service Request";
-  final submitEmail = "service@uscultrasound.com";
+  //final submitEmail = "service@uscultrasound.com";
+  final submitEmail = "appdevbri@gmail.com";
+
   final submitTitle = 'Submit Service';
   final submitContent =
       "This will submit your service request to USC for review. Once submitted a representative will contact you shortly. Are you sure?";
@@ -38,6 +40,8 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
 
   File _serviceImage;
   bool _progressBarActive = false;
+  String serviceType = "Select Services Needed";
+  var fileName = "";
 
   @override
   Widget build(BuildContext context) {
@@ -74,8 +78,10 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
                 _buildTextFormField(_contactNameTC),
                 _buildTextFormTitleField("Contact Phone Number: "),
                 _buildTextFormField(_contactNumberTC),
+                _buildServiceTypeButton(),
                 _buildTextFormTitleField("Describe Service Required: "),
                 _buildTextFormField(_serviceNotesTC),
+                _buildFileText(),
                 _buildPhotoButton(),
                 _buildSubmitButton(),
               ],
@@ -116,6 +122,49 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
       ),
     );
   }
+  
+  Widget _buildServiceTypeButton() {
+    return Container(
+      padding: new EdgeInsets.all(16.0),
+      child: Center(
+        child: new RaisedButton(
+            onPressed: _showServiceTypeDialog,
+            child: new Text(serviceType, style: new TextStyle(fontSize: 14.0, color: Colors.white),)),
+      ),
+    );
+  }
+
+  Future<Null> _showServiceTypeDialog() async{
+    return showDialog<Null>(
+      context: context,
+      barrierDismissible: true, // user must tap button!
+      builder: (BuildContext context) {
+        return new SimpleDialog(
+          title: new Text("Services Needed"),
+          children: <Widget>[
+            new FlatButton(onPressed: () {
+              setServiceTypeState("Services Needed: Evaluate System");
+              Navigator.pop(context);
+              }, child: new Text("Evaluate System")),
+            new FlatButton(onPressed: () {
+              setServiceTypeState("Services Needed: Preventive Maintenance");
+              Navigator.pop(context);
+            }, child: new Text("Preventive Maintenance")),
+            new FlatButton(onPressed: () {
+              setServiceTypeState("Services Needed: Probe Evaluation");
+              Navigator.pop(context);
+            }, child: new Text("Probe Evaluation"))
+          ],
+        );
+      },
+    );
+  }
+
+  void setServiceTypeState(String type){
+    setState(() {
+      serviceType = type;
+    });
+  }
 
   Widget _buildSubmitButton() {
     return new Container(
@@ -150,6 +199,9 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
                       "Contact Number: " +
                       _contactNumberTC.text +
                       "\n\n" +
+                      "Services Needed: " +
+                      serviceType +
+                      "\n\n" +
                       "Service Required Description: " +
                       _serviceNotesTC.text +
                       "\n\n\n\n" +
@@ -173,6 +225,15 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
       padding: EdgeInsets.all(8.0),
       child: Text(title,
           style: TextStyle(fontSize: 14.0, color: kUltraSoundPrimaryText)),
+    );
+  }
+
+  Widget _buildFileText(){
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(4.0, 8.0, 4.0, 0.0),
+      child: new Text(
+          fileName,
+          style: new TextStyle(fontSize: 12.0, color: Colors.grey)),
     );
   }
 
@@ -272,10 +333,16 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
 
   Future _buildImagePicker() async {
     _serviceImage = await ImagePicker.pickImage(source: ImageSource.gallery);
+    setState(() {
+      fileName = "Attachment:: " + _serviceImage.path;
+    });
   }
 
   Future _buildCamera() async {
     _serviceImage = await ImagePicker.pickImage(source: ImageSource.camera);
+    setState(() {
+      fileName = "Attachment:: " + _serviceImage.path;
+    });
   }
 
   Future<Null> _neverSatisfied() async {
