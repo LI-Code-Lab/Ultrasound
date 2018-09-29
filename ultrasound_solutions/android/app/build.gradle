@@ -35,8 +35,8 @@ android {
         applicationId "com.licoding.ultrasoundsolutions"
         minSdkVersion 16
         targetSdkVersion 27
-        versionCode 10
-        versionName "1.8"
+        versionCode 12
+        versionName "1.91"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 

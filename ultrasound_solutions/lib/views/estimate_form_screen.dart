@@ -29,8 +29,7 @@ class EstimateFormScreenState extends State<EstimateFormScreen> {
 
   final emailTitle = "New Estimate Request";
 
-//  final submitEmail = "info@uscultrasound.com";
-  final submitEmail = "appdevbri@gmail.com";
+  final submitEmail = "info@uscultrasound.com";
 
   final submitTitle = 'Submit Estimate';
   final submitContent =

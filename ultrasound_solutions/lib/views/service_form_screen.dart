@@ -30,8 +30,7 @@ class ServiceFormScreenState extends State<ServiceFormScreen> {
       new TextEditingController();
 
   final emailTitle = "New Service Request";
-  //final submitEmail = "service@uscultrasound.com";
-  final submitEmail = "appdevbri@gmail.com";
+  final submitEmail = "service@uscultrasound.com";
 
   final submitTitle = 'Submit Service';
   final submitContent =
